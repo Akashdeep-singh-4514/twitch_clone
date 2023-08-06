@@ -1,5 +1,5 @@
 setTimeout(() => {
-    url = `https://api.twitch.tv/helix/streams?first=30`
+    url = `https://api.twitch.tv/helix/streams?first=40`
     xhr = new XMLHttpRequest()
     token = "z1tf616p6orah9l8yzzwc8lltfzx81"
 
