@@ -40,7 +40,7 @@ setTimeout(() => {
 					console.log(document.getElementById(`vid-${i}`));
 
 					woutput = `
-                    <iframe src="https://player.twitch.tv/?channel=${response.data[i].user_login}&parent=akashdeep-singh-4514.github.io/twitch_clone/" frameborder="0" allowfullscreen="true" scrolling="no" height="378" width="620"></iframe><br>
+                    <iframe src="https://player.twitch.tv/?channel=${response.data[i].user_login}&parent="akashdeep-singh-4514.github" frameborder="0" allowfullscreen="true" scrolling="no" height="378" width="620"></iframe><br>
 					<span style="font-size:medium;"><b>${response.data[i].title}</b></span><br>
 					<span style="color: grey;font-size:x-large;">${response.data[i].user_login}</span><br>
 					<span> game name: ${response.data[i].game_name}</span><br>
