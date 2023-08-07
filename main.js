@@ -1,157 +1,222 @@
+url = `https://api.twitch.tv/helix/streams?first=40`
+xhr = new XMLHttpRequest()
+token = "z1tf616p6orah9l8yzzwc8lltfzx81"
+
 setTimeout(() => {
-    url = `https://api.twitch.tv/helix/streams?first=40`
-    xhr = new XMLHttpRequest()
-    token = "z1tf616p6orah9l8yzzwc8lltfzx81"
+
+	xhr.open('GET', url)
+	xhr.setRequestHeader('Authorization', `Bearer ${token}`);
+	xhr.setRequestHeader('Client-Id', 'wxcizc5kndyng22j25b87gjlmnpzqx');
 
 
-    xhr.open('GET', url)
-    xhr.setRequestHeader('Authorization', `Bearer ${token}`);
-    xhr.setRequestHeader('Client-Id', 'wxcizc5kndyng22j25b87gjlmnpzqx');
+	xhr.onreadystatechange = () => {
+		// console.log(xhr.readyState);
+		if (xhr.readyState == 4 && xhr.status == 200) {
+			response = JSON.parse(xhr.responseText)
+			output = ''
+			console.log(response.data);
+			// console.log(typeof(response));
+			for (let i = 0; i < response.data.length; i++) {
 
-
-    xhr.onreadystatechange = () => {
-        // console.log(xhr.readyState);
-        if (xhr.readyState == 4 && xhr.status == 200) {
-            response = JSON.parse(xhr.responseText)
-            output = ''
-            console.log(response.data);
-            // console.log(typeof(response));
-            for (let i = 0; i < response.data.length; i++) {
-
-                languages = ''
-                for (let i = 0; i < response.data[i].tags.length; i++) {
-                    languages += `<span style="color: gray; background-color: lightgrey; border-radius: 3px; padding: 2px; margin:2px;">${response.data[i].tags[i]}</span>`
-                }
-                thumb1 = response.data[i].thumbnail_url.replace("{width}", "440")
-                thumb2 = thumb1.replace("{height}", "250")
-                output += `
-            <div style="width: 23%; margin: 9px;">
-                <a href="https://www.twitch.tv/${response.data[i].user_login}" style="text-decoration:none; color:black;"><img src="${thumb2}" width="100%"><br>
+				languages = ''
+				for (let i = 0; i < response.data[i].tags.length; i++) {
+					languages += `<span style="color: gray; background-color: lightgrey; border-radius: 3px; padding: 2px; margin:2px;">${response.data[i].tags[i]}</span>`
+				}
+				thumb1 = response.data[i].thumbnail_url.replace("{width}", "440")
+				thumb2 = thumb1.replace("{height}", "250")
+				output += `
+                <div style="width: 23%; margin: 9px;" id="vid-${i}" class="vid">
+                <img src="${thumb2}" width="100%"><br>
                 <span style="font-size:medium;"><b>${response.data[i].title}</b></span><br>
                 <span style="color: grey;font-size:medium;">${response.data[i].user_login}</span><br>
-                <span>${response.data[i].game_name}</span><br>${languages}</a>
+                <span>${response.data[i].game_name}</span><br>${languages}
             </div>
-            
             `
+			}
+			document.getElementById('my-div').innerHTML = output
 
-            }
-            document.getElementById('my-div').innerHTML = output
+			for (let i = 0; i < response.data.length; i++) {
+				document.getElementById(`vid-${i}`).addEventListener('click', () => {
+					console.log(document.getElementById(`vid-${i}`));
 
-            // console.log(response);
-        }
-    }
-    xhr.send()
+					woutput = `
+                    <iframe src="https://player.twitch.tv/?channel=${response.data[i].user_login}&parent=127.0.0.1" frameborder="0" allowfullscreen="true" scrolling="no" height="378" width="620"></iframe><br>
+					<span style="font-size:medium;"><b>${response.data[i].title}</b></span><br>
+					<span style="color: grey;font-size:x-large;">${response.data[i].user_login}</span><br>
+					<span> game name: ${response.data[i].game_name}</span><br>
+					<p> started at : ${response.data[i].started_at}</p>
+					<p> viewer count: ${response.data[i].viewer_count}</p>${languages}
+					
+					
+
+                    `
+
+					document.getElementById('my-div2').setAttribute("style", "width:70%; margin-left:10%")
+					document.getElementById('mainpage').setAttribute("style", "display:flex;flex-wrap:wrap;")
+					// document.getElementById('aside').setAttribute("style","margin-right:10%;")
+
+
+					document.getElementById('my-div2').innerHTML = woutput
+
+				})
+			}
+
+
+		}
+	}
+	xhr.send()
 
 }, 1000);
 
 
+
 document.getElementById('search-btn').addEventListener('click', () => {
-    text = document.getElementById("search-text").value
 
-    url = `https://api.twitch.tv/helix/streams?first=30`
-    xhr = new XMLHttpRequest()
-    token = "z1tf616p6orah9l8yzzwc8lltfzx81"
-
-
-    xhr.open('GET', url)
-    xhr.setRequestHeader('Authorization', `Bearer ${token}`);
-    xhr.setRequestHeader('Client-Id', 'wxcizc5kndyng22j25b87gjlmnpzqx');
+	xhr.open('GET', url)
+	xhr.setRequestHeader('Authorization', `Bearer ${token}`);
+	xhr.setRequestHeader('Client-Id', 'wxcizc5kndyng22j25b87gjlmnpzqx');
 
 
-    xhr.onreadystatechange = () => {
-        // console.log(xhr.readyState);
-        if (xhr.readyState == 4 && xhr.status == 200) {
-            response = JSON.parse(xhr.responseText)
-            output = ''
-            console.log(response.data);
+	xhr.onreadystatechange = () => {
+		// console.log(xhr.readyState);
+		if (xhr.readyState == 4 && xhr.status == 200) {
+			response = JSON.parse(xhr.responseText)
+			output = ''
+			console.log(response.data);
 
-            // console.log(typeof(response));
+			// console.log(typeof(response));
+			for (let i = 0; i < response.data.length; i++) {
+
+				if (text == response.data[i].game_name || text == response.data[i].user_login || text == response.data[i].user_name) {
+					languages = ''
+					for (let i = 0; i < response.data[i].tags.length; i++) {
+						languages += `<span style="color: gray; background-color: lightgrey; border-radius: 3px; padding: 2px; margin:2px;">${response.data[i].tags[i]}</span>`
+					}
+					thumb1 = response.data[i].thumbnail_url.replace("{width}", "440")
+					thumb2 = thumb1.replace("{height}", "250")
+					output += `
+                <div style="width: 23%; margin: 9px;" id="vid-${i}" class="vid">
+                <img src="${thumb2}" width="100%"><br>
+                <span style="font-size:medium;"><b>${response.data[i].title}</b></span><br>
+                <span style="color: grey;font-size:medium;">${response.data[i].user_login}</span><br>
+                <span>${response.data[i].game_name}</span><br>${languages}
+                </div>
+                `
+
+				}
+
+			}
+			document.getElementById('my-div').innerHTML = output
             for (let i = 0; i < response.data.length; i++) {
+				document.getElementById(`vid-${i}`).addEventListener('click', () => {
+					console.log(document.getElementById(`vid-${i}`));
 
-                if (text == response.data[i].game_name || text == response.data[i].user_login || text == response.data[i].user_name) {
-                    languages = ''
-                    for (let i = 0; i < response.data[i].tags.length; i++) {
-                        languages += `<span style="color: gray; background-color: lightgrey; border-radius: 3px; padding: 2px; margin:2px;">${response.data[i].tags[i]}</span>`
-                    }
-                    thumb1 = response.data[i].thumbnail_url.replace("{width}", "440")
-                    thumb2 = thumb1.replace("{height}", "250")
-                    output += `
-                    <div style="width: 50%; margin: 9px;">
-                        <a href="https://www.twitch.tv/${response.data[i].user_login}" style="text-decoration:none; color:black;"><img src="${thumb2}" width="100%"><br>
-                        <span style="font-size:medium;"><b>${response.data[i].title}</b></span><br>
-                        <span style="color: grey;font-size:medium;">${response.data[i].user_login}</span><br>
-                        <span>${response.data[i].game_name}</span><br>${languages}</a>
-                    </div>
-                    
+					woutput = `
+                    <iframe src="https://player.twitch.tv/?channel=${response.data[i].user_login}&parent=127.0.0.1" frameborder="0" allowfullscreen="true" scrolling="no" height="378" width="620"></iframe><br>
+					<span style="font-size:medium;"><b>${response.data[i].title}</b></span><br>
+					<span style="color: grey;font-size:x-large;">${response.data[i].user_login}</span><br>
+					<span> game name: ${response.data[i].game_name}</span><br>
+					<p> started at : ${response.data[i].started_at}</p>
+					<p> viewer count: ${response.data[i].viewer_count}</p>${languages}
+					
+					
+
                     `
 
-                }
-
-            }
-            document.getElementById('my-div').innerHTML = output
-            document.getElementById("return").innerHTML=`<a href="index.html"><button><</button></a>`
+					document.getElementById('my-div2').setAttribute("style", "width:70%; margin-left:10%")
+					document.getElementById('mainpage').setAttribute("style", "display:flex;flex-wrap:wrap;")
+					// document.getElementById('aside').setAttribute("style","margin-right:10%;")
 
 
-            // console.log(response);
-        }
-    }
-    xhr.send()
+					document.getElementById('my-div2').innerHTML = woutput
+
+				})
+			}
+
+
+
+
+
+		}
+	}
+	xhr.send()
 
 })
 document.getElementById('search-text').addEventListener('keypress', (e) => {
-    if (e.key == 'Enter') {
-        e.preventDefault()
-        text = document.getElementById("search-text").value
+	if (e.key == 'Enter') {
+		e.preventDefault()
+		text = document.getElementById("search-text").value
 
-        url = `https://api.twitch.tv/helix/streams?first=30`
-        xhr = new XMLHttpRequest()
-        token = "z1tf616p6orah9l8yzzwc8lltfzx81"
-
-
-        xhr.open('GET', url)
-        xhr.setRequestHeader('Authorization', `Bearer ${token}`);
-        xhr.setRequestHeader('Client-Id', 'wxcizc5kndyng22j25b87gjlmnpzqx');
+		url = `https://api.twitch.tv/helix/streams?first=30`
+		xhr = new XMLHttpRequest()
+		token = "z1tf616p6orah9l8yzzwc8lltfzx81"
 
 
-        xhr.onreadystatechange = () => {
-            // console.log(xhr.readyState);
-            if (xhr.readyState == 4 && xhr.status == 200) {
-                response = JSON.parse(xhr.responseText)
-                output = ''
-                console.log(response.data);
+		xhr.open('GET', url)
+		xhr.setRequestHeader('Authorization', `Bearer ${token}`);
+		xhr.setRequestHeader('Client-Id', 'wxcizc5kndyng22j25b87gjlmnpzqx');
 
-                // console.log(typeof(response));
-                for (let i = 0; i < response.data.length; i++) {
 
-                    if (text == response.data[i].game_name || text == response.data[i].user_login || text == response.data[i].user_name) {
-                        languages = ''
-                        for (let i = 0; i < response.data[i].tags.length; i++) {
-                            languages += `<span style="color: gray; background-color: lightgrey; border-radius: 3px; padding: 2px; margin:2px;">${response.data[i].tags[i]}</span>`
-                        }
-                        thumb1 = response.data[i].thumbnail_url.replace("{width}", "440")
-                        thumb2 = thumb1.replace("{height}", "250")
-                        output += `
-                    <div style="width: 50%; margin: 9px;">
-                        <a href="https://www.twitch.tv/${response.data[i].user_login}" style="text-decoration:none; color:black;"><img src="${thumb2}" width="100%"><br>
+		xhr.onreadystatechange = () => {
+			// console.log(xhr.readyState);
+			if (xhr.readyState == 4 && xhr.status == 200) {
+				response = JSON.parse(xhr.responseText)
+				output = ''
+				console.log(response.data);
+
+				// console.log(typeof(response));
+				for (let i = 0; i < response.data.length; i++) {
+
+					if (text == response.data[i].game_name || text == response.data[i].user_login || text == response.data[i].user_name) {
+						languages = ''
+						for (let i = 0; i < response.data[i].tags.length; i++) {
+							languages += `<span style="color: gray; background-color: lightgrey; border-radius: 3px; padding: 2px; margin:2px;">${response.data[i].tags[i]}</span>`
+						}
+						thumb1 = response.data[i].thumbnail_url.replace("{width}", "440")
+						thumb2 = thumb1.replace("{height}", "250")
+						output += `
+                <div style="width: 23%; margin: 9px;" id="vid-${i}" class="vid">
+                <a href="https://www.twitch.tv/${response.data[i].user_login}" style="color:black;text-decoration:none;"><img src="${thumb2}" width="100%"><br>
+                <span style="font-size:medium;"><b>${response.data[i].title}</b></span><br>
+                <span style="color: grey;font-size:medium;">${response.data[i].user_login}</span><br>
+                <span>${response.data[i].game_name}</span><br>${languages}</a>
+            </div>
+            `
+
+					}
+
+				}
+				document.getElementById('my-div').innerHTML = output
+				for (let i = 0; i < response.data.length; i++) {
+                    document.getElementById(`vid-${i}`).addEventListener('click', () => {
+                        console.log(document.getElementById(`vid-${i}`));
+    
+                        woutput = `
+                        <iframe src="https://player.twitch.tv/?channel=${response.data[i].user_login}&parent=127.0.0.1" frameborder="0" allowfullscreen="true" scrolling="no" height="378" width="620"></iframe><br>
                         <span style="font-size:medium;"><b>${response.data[i].title}</b></span><br>
-                        <span style="color: grey;font-size:medium;">${response.data[i].user_login}</span><br>
-                        <span>${response.data[i].game_name}</span><br>${languages}</a>
-                    </div>
-                    
-                    `
-
-                    }
-
+                        <span style="color: grey;font-size:x-large;">${response.data[i].user_login}</span><br>
+                        <span> game name: ${response.data[i].game_name}</span><br>
+                        <p> started at : ${response.data[i].started_at}</p>
+                        <p> viewer count: ${response.data[i].viewer_count}</p>${languages}
+                        
+                        
+    
+                        `
+    
+                        document.getElementById('my-div2').setAttribute("style", "width:70%; margin-left:10%")
+                        document.getElementById('mainpage').setAttribute("style", "display:flex;flex-wrap:wrap;")
+                        // document.getElementById('aside').setAttribute("style","margin-right:10%;")
+    
+    
+                        document.getElementById('my-div2').innerHTML = woutput
+    
+                    })
                 }
-                document.getElementById('my-div').innerHTML = output
-                document.getElementById("return").innerHTML=`<a href="index.html"><button><</button></a>`
+    
+			}
+		}
+		xhr.send()
 
-
-
-                // console.log(response);
-            }
-        }
-        xhr.send()
-
-    }
+	}
 })
+
