@@ -2,9 +2,7 @@
 // xhr2 = new XMLHttpRequest()
 
 // xhr2.open('GET', url_for_token)
-// 	xhr2.setRequestHeader('client_id', `wxcizc5kndyng22j25b87gjlmnpzqx`);
-// 	xhr2.setRequestHeader('client_secret', '9bglnihhn5x3gc2xgmc4wz75k5xzs1');
-// 	xhr2.setRequestHeader('grant_type', 'client_credentials');
+// 
 // 	xhr2.onreadystatechange = () => {
 // 		if (xhr2.readyState == 4 && xhr2.status == 200) {
 // 			response = JSON.parse(xhr2.responseText)
