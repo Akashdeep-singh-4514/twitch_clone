@@ -1,6 +1,28 @@
+// url_for_token="https://id.twitch.tv/oauth2/token?client_id=wxcizc5kndyng22j25b87gjlmnpzqx&client_secret=9bglnihhn5x3gc2xgmc4wz75k5xzs1&grant_type=client_credentials"
+// xhr2 = new XMLHttpRequest()
+
+// xhr2.open('GET', url_for_token)
+// 	xhr2.setRequestHeader('client_id', `wxcizc5kndyng22j25b87gjlmnpzqx`);
+// 	xhr2.setRequestHeader('client_secret', '9bglnihhn5x3gc2xgmc4wz75k5xzs1');
+// 	xhr2.setRequestHeader('grant_type', 'client_credentials');
+// 	xhr2.onreadystatechange = () => {
+// 		if (xhr2.readyState == 4 && xhr2.status == 200) {
+// 			response = JSON.parse(xhr2.responseText)
+// 			console.log(response.access_token);
+// 		token = response.access_token
+
+			
+// 		}
+// 	}
+// 	xhr2.send()
+
+
+
 url = `https://api.twitch.tv/helix/streams?first=40`
 xhr = new XMLHttpRequest()
-token = "z1tf616p6orah9l8yzzwc8lltfzx81"
+token="vlwveohhow5p32twal1xntmpzgkn4o"
+
+
 
 setTimeout(() => {
 
@@ -36,7 +58,7 @@ setTimeout(() => {
 					console.log(document.getElementById(`vid-${i}`));
 
 					woutput = `
-                    <iframe src="https://player.twitch.tv/?channel=${response.data[i].user_login}&parent=akashdeep-singh-4514.github.io" frameborder="0" allowfullscreen="true" scrolling="no" height="378" width="620"></iframe><br>
+                    <iframe src="https://player.twitch.tv/?channel=${response.data[i].user_login}&parent=127.0.0.1" frameborder="0" allowfullscreen="true" scrolling="no" height="378" width="620"></iframe><br>
 					<span style="font-size:medium;"><b>${response.data[i].title}</b></span><br>
 					<span style="color: grey;font-size:x-large;">${response.data[i].user_login}</span><br>
 					<span> game name: ${response.data[i].game_name}</span><br>
@@ -95,7 +117,7 @@ document.getElementById('search-btn').addEventListener('click', () => {
 						languages += `<span style="color: gray; background-color: lightgrey; border-radius: 3px; padding: 2px; margin:2px;">${response.data[i].tags[i]}</span>`
 					}
 					woutput = `
-                    <iframe src="https://player.twitch.tv/?channel=${response.data[i].user_login}&parent=akashdeep-singh-4514.github.io" frameborder="0" allowfullscreen="true" scrolling="no" height="378" width="620"></iframe><br>
+                    <iframe src="https://player.twitch.tv/?channel=${response.data[i].user_login}&parent=127.0.0.1" frameborder="0" allowfullscreen="true" scrolling="no" height="378" width="620"></iframe><br>
 					<span style="font-size:medium;"><b>${response.data[i].title}</b></span><br>
 					<span style="color: grey;font-size:x-large;">${response.data[i].user_login}</span><br>
 					<span> game name: ${response.data[i].game_name}</span><br>
@@ -164,7 +186,7 @@ document.getElementById('search-text').addEventListener('keypress', (e) => {
 						}
 
 						woutput = `
-						<iframe src="https://player.twitch.tv/?channel=${response.data[i].user_login}&parent=akashdeep-singh-4514.github.io" frameborder="0" allowfullscreen="true" scrolling="no" height="378" width="620"></iframe><br>
+						<iframe src="https://player.twitch.tv/?channel=${response.data[i].user_login}&parent=127.0.0.1" frameborder="0" allowfullscreen="true" scrolling="no" height="378" width="620"></iframe><br>
 						<span style="font-size:medium;"><b>${response.data[i].title}</b></span><br>
 						<span style="color: grey;font-size:x-large;">${response.data[i].user_login}</span><br>
 						<span> game name: ${response.data[i].game_name}</span><br>
