@@ -18,7 +18,7 @@
 
 url = `https://api.twitch.tv/helix/streams?first=40`
 xhr = new XMLHttpRequest()
-token="vlwveohhow5p32twal1xntmpzgkn4o"
+token="ilt862kxq846xwbwzek6dhjcb88b3b"
 
 
 
